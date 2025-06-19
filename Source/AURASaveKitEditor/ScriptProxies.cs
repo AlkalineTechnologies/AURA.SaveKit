@@ -4,7 +4,7 @@ using FlaxEditor.Content.Settings;
 using FlaxEditor.GUI;
 using FlaxEngine;
 
-namespace AFSMEditor
+namespace AURASaveKitEditor
 {
     /// <summary>
     /// C# Proxy for the component template.

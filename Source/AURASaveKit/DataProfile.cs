@@ -2,7 +2,7 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace AFSM;
+namespace AURASaveKit;
 
 /// <summary>
 /// DataProfile Script.

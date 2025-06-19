@@ -1,3 +1,4 @@
+#if FLAX_EDITOR
 using FlaxEditor;
 using FlaxEditor.Content.Settings;
 using FlaxEditor.Utilities;
@@ -9,20 +10,18 @@ using FlaxEngine;
 using System;
 using System.IO;
 
-namespace AFSMEditor {
+namespace AURASaveKitEditor {
     /// <summary>
-    /// The AFSM Editor Plugin.
+    /// The AURA Editor Plugin.
     /// </summary>
-    public class AFSMHelper : EditorPlugin
+    public class AURASaveKitEditor : EditorPlugin
     {
-        public override void Initialize() {
-            base.Initialize();
-            
-            #if FLAX_EDITOR 
-                String path = Path.Combine(Globals.ProjectContentFolder, "Settings", "AURA.SaveKit.Settings.json");
-                Editor.SaveJsonAsset(path, new AURA_SaveKit_Settings());
-                GameSettings.SetCustomSettings("AURA.SaveKit.Config", Content.LoadAsync<JsonAsset>(path));
-            #endif
+        public override void InitializeEditor() {
+            base.InitializeEditor();
+
+            String path = Path.Combine(Globals.ProjectContentFolder, "Settings", "AURASaveKit.Settings.json");
+            Editor.SaveJsonAsset(path, new AURASaveKit_Settings());
+            GameSettings.SetCustomSettings("AURASaveKit.Config", Content.LoadAsync<JsonAsset>(path));
 
 
             this.Editor.ContentDatabase.AddProxy(new TemplateCSharpProxy());
@@ -34,6 +33,7 @@ namespace AFSMEditor {
         /// <summary>
         /// Deinitialize the plugin.
         /// </summary>
-        public override void Deinitialize() { base.Deinitialize(); }
+        public override void DeinitializeEditor() { base.DeinitializeEditor(); }
     }
 }
+#endif

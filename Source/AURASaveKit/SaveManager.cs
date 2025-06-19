@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 
 
-namespace AFSM;
+namespace AURASaveKit;
 
 /// <summary>
 /// Represents the result codes for save/load operations.
@@ -44,14 +44,14 @@ public class SaveManager
     /// <summary>
     /// Gets the file path where save data will be stored.
     /// </summary>
-    public static string SaveFilePath => AFSM.Instance.Settings.SaveFilePath;
+    public static string SaveFilePath => AURASaveKit.Instance.Settings.SaveFilePath;
 
     /// <summary>
     /// Gets or sets the name of the current save file.
     /// </summary>
     public static string CurrentSaveName { get; set; } = "DefaultSave";
 
-    static AFSM_Settings Settings => AFSM.Instance.Settings;
+    static AURASaveKit_Settings Settings => AURASaveKit.Instance.Settings;
 
     static string path => Path.Combine(
                 Settings.SaveFilePath,
@@ -105,13 +105,13 @@ public class SaveManager
 
             SaveData["Meta"] = new JObject
             {
-                ["SaveVersion"] = AFSM.Version.ToString(),
+                ["SaveVersion"] = AURASaveKit.Version.ToString(),
                 ["DateTime"] = DateTime.UtcNow.ToString("yyy-MM-dd HH:mm:ss"),
                 ["Hashes"] = new JObject()
             };
         }
 
-        SaveData["Meta"]["Version"] = AFSM.Version.ToString();
+        SaveData["Meta"]["Version"] = AURASaveKit.Version.ToString();
         SaveData["Meta"]["DateTime"] = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss");
 
         SaveData["Meta"]["Hashes"][Data.GetComponentName()] = NewHash;

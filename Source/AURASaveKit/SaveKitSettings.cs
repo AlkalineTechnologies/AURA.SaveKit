@@ -4,7 +4,7 @@ using System;
 /// AFSM_Settings Script.
 /// </summary>
 [Serializable]
-public class AURA_SaveKit_Settings
+public class AURASaveKit_Settings
 {
     
 

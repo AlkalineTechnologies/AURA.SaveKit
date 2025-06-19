@@ -1,4 +1,5 @@
 using System;
+using FlaxEditor.Content.Settings;
 using FlaxEngine;
 
 namespace AURASaveKit
@@ -28,13 +29,13 @@ namespace AURASaveKit
         }
 
         /// <inheritdoc />
-        public static AFSM Instance { get => PluginManager.GetPlugin<AFSM>(); }
+        public static AURASaveKit Instance { get => PluginManager.GetPlugin<AURASaveKit>(); }
 
         /// <inheritdoc />
         public static Version Version { get => Instance._description.Version; }
 
         /// <inheritdoc />
-        public AFSM_Settings Settings;
+        public AURASaveKit_Settings Settings;
 
         /// <inheritdoc />
         public override void Initialize()
@@ -43,7 +44,7 @@ namespace AURASaveKit
 
             GameSettings.Load().CustomSettings.TryGetValue("AURA.SaveKit.Config", out JsonAsset asset);
 
-            Settings = asset.GetInstance<AFSM_Settings>();
+            Settings = asset.GetInstance<AURASaveKit_Settings>();
 
             Debug.Log("Successfully loaded AURA.SaveKit configs");
 

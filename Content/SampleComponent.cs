@@ -11,10 +11,25 @@ namespace Game;
 public class %class%DataProfile : AFSM.DataProfile {
     // Create the data you want to save here.
     
-    public float Health = 100f; // Example property to save
-    public int Score = 0; // Another example property to save
-    public string PlayerName = "Player"; // Example property for player name
-    public Vector3 position = Vector3.Zero; // Example property for position
+    /// <summary>
+    /// This property represents the health of the player.
+    /// </summary>
+    public float Health = 100f;
+
+    /// <summary>
+    /// This property represents the score of the player.
+    /// </summary>
+    public int Score = 0;
+
+    /// <summary>
+    /// This property represents the name of the player.
+    /// </summary>
+    public string PlayerName = "Player";
+
+    /// <summary>
+    /// This property represents the position of the player.
+    /// </summary>
+    public Vector3 position = Vector3.Zero;
 
     /// <summary>
     /// Sets the name of the component as it will appear on the save file.
@@ -79,12 +94,19 @@ public class %class% : SaveComponent {
             out OpResultCode Success
         );
 
-        if (Success != OpResultCode.Success || LoadedData == null) {
-            // Handle the case where loading failed
-            Debug.LogError("Failed to load %class% data profile.");
-            return;
-        }
+if (Success != OpResultCode.Success || LoadedData == null) {
+    // Handle the case where loading failed
+    Debug.LogError("Failed to load %class% data profile.");
+    return;
+}
 
+
+        Debug.Log("Data loaded successfully for %class%");
+        
+        Debug.Log("Health: "        + LoadedData.Health);
+        Debug.Log("Score: "         + LoadedData.Score);
+        Debug.Log("Position: "      + LoadedData.position);
+        Debug.Log("Player Name: "   + LoadedData.PlayerName);
         // Now you can set the data from the loaded profile
     }
 }

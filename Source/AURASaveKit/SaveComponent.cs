@@ -1,7 +1,7 @@
 using FlaxEngine;
 using System;
 
-namespace AFSM;
+namespace AURASaveKit;
 
 /// <summary>
 /// Base class for save components.
