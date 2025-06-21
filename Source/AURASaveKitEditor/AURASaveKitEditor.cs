@@ -9,6 +9,7 @@ using FlaxEditor.Modules;
 using FlaxEngine;
 using System;
 using System.IO;
+using AURASaveKit;
 
 namespace AURASaveKitEditor {
     /// <summary>
@@ -19,14 +20,13 @@ namespace AURASaveKitEditor {
         public override void InitializeEditor() {
             base.InitializeEditor();
 
-            String path = Path.Combine(Globals.ProjectContentFolder, "Settings", "AURASaveKit.Settings.json");
+            String path = Path.Combine(Globals.ProjectContentFolder, "Settings", "AURA.SaveKit.Settings.json");
             Editor.SaveJsonAsset(path, new AURASaveKit_Settings());
-            GameSettings.SetCustomSettings("AURASaveKit.Config", Content.LoadAsync<JsonAsset>(path));
+            GameSettings.SetCustomSettings("AURA.SaveKit.Config", Content.LoadAsync<JsonAsset>(path));
 
-
-            this.Editor.ContentDatabase.AddProxy(new TemplateCSharpProxy());
-            this.Editor.ContentDatabase.AddProxy(new SampleCSharpProxy());
-            this.Editor.ContentDatabase.Rebuild(true);
+            Editor.ContentDatabase.AddProxy(new TemplateCSharpProxy());
+            Editor.ContentDatabase.AddProxy(new SampleCSharpProxy());
+            Editor.ContentDatabase.Rebuild(true);
             Debug.Log("AURA.SaveKit Editor Plugin Initialized");
         }
 

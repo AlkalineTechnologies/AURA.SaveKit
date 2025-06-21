@@ -1,6 +1,6 @@
 using FlaxEngine;
 using System;
-using AFSM;
+using AURASaveKit;
 
 namespace Game;
 
@@ -8,7 +8,7 @@ namespace Game;
 /// The Data Profile for the %class% component
 /// </summary>
 [Serializable]
-public class %class%DataProfile : AFSM.DataProfile {
+public class %class%DataProfile : AURASaveKit.DataProfile {
     // Create the data you want to save here.
     
 
@@ -53,7 +53,7 @@ public class %class% : SaveComponent {
 
 
         // Make sure this is called at the end of your Save method
-        AFSM.SaveManager.WriteData(%class%Data.Instance, out OpResultCode _);
+        AURASaveKit.SaveManager.WriteData(%class%Data.Instance, out OpResultCode _);
     }
 
     /// <summary>
@@ -63,7 +63,7 @@ public class %class% : SaveComponent {
     public override void Load() {
         // Load the data from the saved profile
         // This will read the data from the %class%Data profile and set it to the instance
-        %class%DataProfile LoadedData = AFSM.SaveManager.ReadData<%class%DataProfile>(
+        %class%DataProfile LoadedData = AURASaveKit.SaveManager.ReadData<%class%DataProfile>(
             %class%Data.Instance,
             out OpResultCode Success
         );

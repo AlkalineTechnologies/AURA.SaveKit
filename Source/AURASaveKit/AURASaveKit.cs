@@ -20,7 +20,7 @@ namespace AURASaveKit
                 Author = "Alkaline Software",
                 AuthorUrl = null,
                 HomepageUrl = null,
-                RepositoryUrl = "https://github.com/FlaxEngine/AURASaveKit",
+                RepositoryUrl = "https://github.com/AlkalineTechnologies/AURASaveKit",
                 Description = "This is an example plugin project.",
                 Version = new Version(),
                 IsAlpha = false,
@@ -35,16 +35,16 @@ namespace AURASaveKit
         public static Version Version { get => Instance._description.Version; }
 
         /// <inheritdoc />
-        public AURASaveKit_Settings Settings;
+        private JsonAsset JSettings;
+        public AURASaveKit_Settings Settings => JSettings?.GetInstance<AURASaveKit_Settings>() ?? new AURASaveKit_Settings();
 
         /// <inheritdoc />
         public override void Initialize()
         {
             base.Initialize();
 
-            GameSettings.Load().CustomSettings.TryGetValue("AURA.SaveKit.Config", out JsonAsset asset);
+            GameSettings.Load().CustomSettings.TryGetValue("AURA.SaveKit.Config", out JSettings);
 
-            Settings = asset.GetInstance<AURASaveKit_Settings>();
 
             Debug.Log("Successfully loaded AURA.SaveKit configs");
 

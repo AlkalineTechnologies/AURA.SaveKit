@@ -22,6 +22,10 @@ public enum OpResultCode
     /// </summary>
     FileNotFound,
     /// <summary>
+    /// The specified file could not be read.
+    /// </summary>
+    DirectoryNotFound,
+    /// <summary>
     /// No changes were detected during the operation.
     /// </summary>
     NoChangesDetected,
@@ -39,7 +43,7 @@ public class SaveManager
     /// <summary>
     /// List of registered save components. These will have their data saved.
     /// </summary>
-    public static List<SaveComponent> RegisteredComponent = new List<SaveComponent>();
+    public static List<SaveComponent> RegisteredComponents = new List<SaveComponent>();
 
     /// <summary>
     /// Gets the file path where save data will be stored.
@@ -51,7 +55,12 @@ public class SaveManager
     /// </summary>
     public static string CurrentSaveName { get; set; } = "DefaultSave";
 
-    static AURASaveKit_Settings Settings => AURASaveKit.Instance.Settings;
+    public static AURASaveKit_Settings Settings => AURASaveKit.Instance.Settings;
+
+    /// <summary>
+    /// Clears the list of registered save components.
+    /// </summary>
+
 
     static string path => Path.Combine(
                 Settings.SaveFilePath,
@@ -68,11 +77,21 @@ public class SaveManager
                 c => char.IsLetterOrDigit(c) || c == '_' || c == '-' || c == '.'
             ).ToArray());
 
+        Debug.LogWarning("SAVING TO: " + path);
 
-
-        if (!Directory.Exists(Settings.SaveFilePath) && Settings.CreateDirectories) {
+        Debug.Log("Before error 0");
+        if (!Directory.Exists(Settings.SaveFilePath) && Settings.CreateDirectories)
+        {
+            Debug.Log("Before error 0.A");
             Directory.CreateDirectory(Settings.SaveFilePath);
+        } else if (!Directory.Exists(Settings.SaveFilePath))
+        {
+            Debug.Log("Before error 0.B");
+            Debug.LogError("Save directory does not exist: " + Settings.SaveFilePath);
+            Result = OpResultCode.DirectoryNotFound;
+            return;
         }
+        Debug.Log("Before error 1");
 
         JObject SaveData;
         string NewHash = Data.GenerateHash();
@@ -93,9 +112,7 @@ public class SaveManager
                     Result = OpResultCode.NoChangesDetected;
                     return;
                 }
-            }
-            else
-            {
+            } else {
                 Hashes[Data.GetComponentName()] = NewHash;
             }
         }
@@ -130,8 +147,7 @@ public class SaveManager
     public static T ReadData<T>(T Data, out OpResultCode Success) where T : DataProfile, new()
     {
 
-        if (!File.Exists(path))
-        {
+        if (!File.Exists(path)) {
             Debug.LogError("File not found: " + path);
             Success = OpResultCode.FileNotFound;
             return default;
@@ -157,4 +173,26 @@ public class SaveManager
         return Data;
     }
 
+    public static void DispatchLoad() {
+        for (int i = 0; i < RegisteredComponents.Count; i++)
+        {
+            RegisteredComponents[i].Load();
+        }
+    }
+
+    public static void DispatchSave() {
+        Settings.FileExtension += "1";
+        for (int i = 0; i < RegisteredComponents.Count; i++) {
+            RegisteredComponents[i].Save();
+        }
+
+    }
+    
+    /// <summary>
+    /// Destructor to clear registered components.
+    /// </summary>
+    ~SaveManager()
+    {
+        RegisteredComponents.Clear();
+    }
 }
