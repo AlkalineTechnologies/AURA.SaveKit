@@ -21,7 +21,7 @@ namespace AURASaveKit
                 AuthorUrl = null,
                 HomepageUrl = null,
                 RepositoryUrl = "https://github.com/AlkalineTechnologies/AURASaveKit",
-                Description = "This is an example plugin project.",
+                Description = "Game plugin for saving and loading game data.",
                 Version = new Version(),
                 IsAlpha = false,
                 IsBeta = false,
