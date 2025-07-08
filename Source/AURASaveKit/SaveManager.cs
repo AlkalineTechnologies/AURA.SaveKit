@@ -79,19 +79,15 @@ public class SaveManager
 
         Debug.LogWarning("SAVING TO: " + path);
 
-        Debug.Log("Before error 0");
         if (!Directory.Exists(Settings.SaveFilePath) && Settings.CreateDirectories)
         {
-            Debug.Log("Before error 0.A");
             Directory.CreateDirectory(Settings.SaveFilePath);
         } else if (!Directory.Exists(Settings.SaveFilePath))
         {
-            Debug.Log("Before error 0.B");
             Debug.LogError("Save directory does not exist: " + Settings.SaveFilePath);
             Result = OpResultCode.DirectoryNotFound;
             return;
         }
-        Debug.Log("Before error 1");
 
         JObject SaveData;
         string NewHash = Data.GenerateHash();
@@ -181,7 +177,6 @@ public class SaveManager
     }
 
     public static void DispatchSave() {
-        Settings.FileExtension += "1";
         for (int i = 0; i < RegisteredComponents.Count; i++) {
             RegisteredComponents[i].Save();
         }
